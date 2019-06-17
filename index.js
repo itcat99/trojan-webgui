@@ -3,6 +3,7 @@ const fs = require("fs");
 
 const configDir = path.resolve(__dirname, "config");
 const assetsDir = path.resolve(__dirname, "assets");
+const webDir = path.resolve(__dirname, "web");
 
 const config = JSON.parse(
   fs.readFileSync(path.join(configDir, "config.json")).toString()
@@ -25,4 +26,12 @@ if (local_port !== proxyCfg.port) {
 const pacHost = `http://localhost:${pacCfg.port}/proxy.pac`;
 
 require("./services/pac")({ port: pacCfg.port, assetsDir, pacHost });
-require("./services/api")({ port: guiCfg.port, pacPort: pacCfg.port, pacHost });
+require("./services/api")({
+  port: guiCfg.port,
+  pacPort: pacCfg.port,
+  proxyPort: proxyCfg.port,
+  pacHost,
+  configDir,
+  assetsDir,
+  webDir
+});
