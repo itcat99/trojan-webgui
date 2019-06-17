@@ -1,4 +1,4 @@
-const axios = require("axios")
+const axios = require("axios");
 
 module.exports = async port => {
   let result = "";
@@ -8,21 +8,25 @@ module.exports = async port => {
       method: "get",
       baseURL: "https://raw.githubusercontent.com/petronny/gfwlist2pac/master",
       url: "/gfwlist.pac"
-    })
+    });
 
     result = response.data;
   } catch (error) {
-    result = ""
+    result = "";
   } finally {
-    if (!result) res.json({
-      type: "error",
-      msg: "Can't find update or download failed."
-    })
+    if (!result)
+      res.json({
+        type: "error",
+        msg: "Can't find update or download failed."
+      });
 
-    fs.writeFileSync('./gfwlist.pac', result.replace(/\'SOCKS5.*\'/, `'SOCKS5 127.0.0.1:${port}'`));
+    fs.writeFileSync(
+      "./gfwlist.pac",
+      result.replace(/\'SOCKS5.*\'/, `'SOCKS5 127.0.0.1:${port}'`)
+    );
     res.json({
       type: "success",
       msg: "upgrade gfwlist successed."
-    })
+    });
   }
-}
+};
