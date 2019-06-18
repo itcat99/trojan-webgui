@@ -24,7 +24,7 @@ module.exports = config => {
   });
 
   pac.listen(port, () => {
-    turnOnAutoPac(pacHost).then(() => {}, err => console.error(err));
+    // turnOnAutoPac(pacHost).then(() => {}, err => console.error(err));
     console.log(`[PAC] server is running http://localhost:${port}`);
   });
 };

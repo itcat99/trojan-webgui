@@ -1,18 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Trojan-webgui</title>
-  </head>
-  <body>
-    <section id="view"></section>
-    <button id="pacOn">pac ON</button>
-    <button id="pacOff">pac OFF</button>
-    <button id="globalOn">global ON</button>
-    <button id="globalOff">global OFF</button>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-    <script src="main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Trojan-webgui</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <section>
+    <form id="config" enctype="multipart/form-data">
+      <div>
+        <label for="runType">run_type:</label>
+        <select id="runType" name="run_type">
+          <option value="client">client</option>
+          <option value="server">server</option>
+          <option value="forward">forward</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="localAddr">local_addr:</label>
+        <input id="localAddr" name="local_addr" value="127.0.0.1" />
+      </div>
+      <div>
+        <label for="localPort">local_port:</label>
+        <input id="localPort" name="local_port" value="5901" />
+      </div>
+      <div>
+        <label for="remoteAddr">remote_addr:</label>
+        <input id="remoteAddr" name="remote_addr" />
+      </div>
+      <div>
+        <label for="remotePort">remote_port:</label>
+        <input id="remotePort" name="remote_port" value="443" />
+      </div>
+      <div class="hidden">
+        <label for="targetAddr">target_addr:</label>
+        <input id="targetAddr" name="target_addr" />
+      </div>
+      <div class="hidden">
+        <label for="targetPort">target_port:</label>
+        <input id="targetPort" name="target_port" />
+      </div>
+      <div>
+        <label for="password">password:</label>
+        <input id="password" name="password" />
+      </div>
+      <div class="hidden">
+        <label for="udpTimeout">udp_timeout:</label>
+        <input id="udpTimeout" name="udp_timeout" value="60" />
+      </div>
+      <div>
+        <label for="logLevel">log_level:</label>
+        <input id="logLevel" name="log_level" value="1" />
+      </div>
+      <div>
+        <h3>ssl:</h3>
+        <div id="ssl">
+          <div>
+            <label for="verify">verify:</label>
+            <select id="verify" name="verify">
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </select>
+          </div>
+          <div>
+            <label for="verifyHostname">verify_hostname:</label>
+            <select id="verifyHostname" name="verify_hostname">
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </select>
+          </div>
+          <div>
+            <label for="cert">cert:</label>
+            <input id="cert" name="cert" type="text" placeholder="please use absolute path"
+              title="please use absolute path" />
+          </div>
+          <div class="hidden">
+            <label for="key">key:</label>
+            <input id="key" name="key" type="text" placeholder="please use absolute path"
+              title="please use absolute path" />
+          </div>
+          <div class="hidden">
+            <label for="keyPassword">key_password:</label>
+            <input id="keyPassword" name="key_password" type="text" />
+          </div>
+          <div>
+            <label for="cipher">cipher:</label>
+            <input id="cipher" name="cipher" type="text"
+              value="ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305-SHA256:ECDHE-RSA-CHACHA20-POLY1305-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:RSA-AES128-GCM-SHA256:RSA-AES256-GCM-SHA384:RSA-AES128-SHA:RSA-AES256-SHA:RSA-3DES-EDE-SHA" />
+          </div>
+          <div class="hidden">
+            <label for="preferServerCipher">prefer_server_cipher:</label>
+            <select id="preferServerCipher" name="prefer_server_cipher">
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </select>
+          </div>
+          <div>
+            <label for="sni">sni:</label>
+            <input id="sni" name="sni" type="text" />
+          </div>
+          <div>
+            <label for="alpn">alpn:</label>
+            <input id="alpn" name="alpn" type="text" value="h2,http/1.1" />
+          </div>
+          <div>
+            <label for="reuseSession">reuse_session:</label>
+            <select id="reuseSession" name="reuse_session">
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </select>
+          </div>
+          <div>
+            <label for="sessionTicket">session_ticket:</label>
+            <select id="sessionTicket" name="session_ticket">
+              <option value="true">true</option>
+              <option value="false" selected>false</option>
+            </select>
+          </div>
+          <div class="hidden">
+            <label for="sessionTimeout">session_timeout:</label>
+            <input id="sessionTimeout" name="session_timeout" type="text" value="600" />
+          </div>
+          <div class="hidden">
+            <label for="plainHttpResponse">plain_http_response:</label>
+            <input id="plainHttpResponse" name="plain_http_response" type="text" />
+          </div>
+          <div>
+            <label for="curves">curves:</label>
+            <input id="curves" name="curves" type="text" />
+          </div>
+          <div>
+            <label for="dhparam">dhparam:</label>
+            <input id="dhparam" name="dhparam" type="text" />
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>tcp</h3>
+        <div>
+          <div class="hidden">
+            <label for="preferIpv4">prefer_ipv4:</label>
+            <select id="preferIpv4" name="prefer_ipv4">
+              <option value="true">true</option>
+              <option value="false" selected>false</option>
+            </select>
+          </div>
+          <div>
+            <label for="noDelay">no_delay:</label>
+            <select id="noDelay" name="no_delay">
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </select>
+          </div>
+          <div>
+            <label for="keepAlive">keep_alive:</label>
+            <select id="keepAlive" name="keep_alive">
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </select>
+          </div>
+          <div>
+            <label for="fastOpen">fast_open:</label>
+            <select id="fastOpen" name="fast_open">
+              <option value="true">true</option>
+              <option value="false" selected>false</option>
+            </select>
+          </div>
+          <div>
+            <label for="fastOpenQlen">fast_open_qlen:</label>
+            <input id="fastOpenQlen" name="fast_open_qlen" type="text" value="20" />
+          </div>
+        </div>
+      </div>
+      <div class="hidden" id="mysql">
+        <h3>mysql</h3>
+        <div>
+          <label for="enabled">enabled:</label>
+          <select id="enabled" name="enabled">
+            <option value="true">true</option>
+            <option value="false" selected>false</option>
+          </select>
+        </div>
+        <div>
+          <label for="serverAddr">server_addr:</label>
+          <input id="serverAddr" name="server_addr" type="text" value="127.0.0.1" />
+        </div>
+        <div>
+          <label for="serverPort">server_port:</label>
+          <input id="serverPort" name="server_port" type="text" value="3306" />
+        </div>
+        <div>
+          <label for="database">database:</label>
+          <input id="database" name="database" type="text" />
+        </div>
+        <div>
+          <label for="username">username:</label>
+          <input id="username" name="username" type="text" />
+        </div>
+        <div>
+          <label for="password">password:</label>
+          <input id="password" name="password" type="text" />
+        </div>
+      </div>
+    </form>
+    <button type="submit" form="config">Submit</button>
+    <button type="reset" form="config">reset</button>
+  </section>
+  <button id="start">start</button>
+  <button id="stop">stop</button>
+  <button id="pacOn">pac ON</button>
+  <button id="pacOff">pac OFF</button>
+  <button id="globalOn">global ON</button>
+  <button id="globalOff">global OFF</button>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+  <script src="main.js"></script>
+</body>
+
 </html>

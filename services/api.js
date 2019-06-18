@@ -1,6 +1,8 @@
 const path = require("path");
 const express = require("express");
 const fs = require("fs");
+// const bodyParser = require('body-parser')
+const multer = require('multer')
 // const axios = require("axios");
 // const { spawn } = require("child_process");
 const turnOnAutoPac = require("../scripts/turnOnAutoPac");
@@ -8,6 +10,8 @@ const turnOffAutoPac = require("../scripts/turnOffAutoPac");
 const turnOnGlob = require("../scripts/turnOnGlob");
 const turnOffGlob = require("../scripts/turnOffGlob");
 const upgradePac = require("../scripts/upgradePac");
+const updateConfig = require("../scripts/updateConfig")
+const run = require("../scripts/run")
 
 module.exports = ({
   port,
@@ -20,11 +24,54 @@ module.exports = ({
 }) => {
   const app = express();
   const router = express.Router();
+  const upload = multer();
 
   app.use(express.static(webDir));
   app.use(express.static(assetsDir));
   app.use(express.static(configDir));
 
+  router.post("/start", async (req, res) => {
+    try {
+      await turnOnAutoPac(pacHost);
+      run({
+        configDir,
+        assetsDir
+      });
+      res.json({
+        type: 'success'
+      })
+    } catch (error) {
+      res.json({
+        type: "error",
+        msg: err
+      });
+
+      res.end();
+    }
+  })
+  router.post("/stop", async (req, res) => {
+    try {
+      await turnOffAutoPac()
+      await turnOffGlob()
+
+      res.json({
+        type: 'success'
+      })
+    } catch (error) {
+      res.json({
+        type: "error",
+        msg: err
+      });
+
+      res.end();
+    }
+  })
+
+  router.post("/updateClientConfig", upload.array(), (req, res) => {
+    const formData = req.body;
+    updateConfig(formData);
+    res.status(200);
+  })
   router.get("/clientConfig", (_req, res) => {
     const clientConfig = fs
       .readFileSync(path.join(configDir, "client.json"))

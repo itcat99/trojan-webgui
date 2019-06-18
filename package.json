@@ -6,12 +6,15 @@
   "author": "FreMaNgo <boping2010@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "./trojan-osx --config ./config/client.json --log access.log & node index.js"
+    "start": "pm2 start index.js --name trojan",
+    "restart": "pm2 restart index.js",
+    "stop": "pm2 stop index.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "express": "^4.17.1",
-    "network": "^0.4.1",
+    "multer": "^1.4.1",
+    "pm2": "^3.5.1",
     "systeminformation": "^4.11.4"
   }
 }

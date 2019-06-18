@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs");
+const run = require("./scripts/run")
 
 const configDir = path.resolve(__dirname, "config");
 const assetsDir = path.resolve(__dirname, "assets");
@@ -12,16 +13,8 @@ const clientConfig = JSON.parse(
   fs.readFileSync(path.join(configDir, "client.json")).toString()
 );
 
-const { local_port } = clientConfig;
-const { gui: guiCfg, pac: pacCfg, proxy: proxyCfg } = config;
-
-if (local_port !== proxyCfg.port) {
-  trojanConfig.local_port = proxyCfg.port;
-  fs.writeFileSync(
-    path.join(configDir, "config.json"),
-    JSON.stringify(trojanConfig, null, 2)
-  );
-}
+const { local_port = 1080 } = clientConfig;
+const { gui: guiCfg, pac: pacCfg } = config;
 
 const pacHost = `http://localhost:${pacCfg.port}/proxy.pac`;
 
@@ -29,7 +22,7 @@ require("./services/pac")({ port: pacCfg.port, assetsDir, pacHost });
 require("./services/api")({
   port: guiCfg.port,
   pacPort: pacCfg.port,
-  proxyPort: proxyCfg.port,
+  proxyPort: local_port,
   pacHost,
   configDir,
   assetsDir,
