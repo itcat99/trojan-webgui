@@ -147,7 +147,7 @@ window.onload = function() {
       baseURL: `http://localhost:${port}/api`,
     });
 
-    instance.get("/clientConfig").then(result => {
+    instance.get("/trojanConfig").then(result => {
       const { type, msg } = result.data;
       if (type === "success") {
         fillForm(JSON.parse(msg));

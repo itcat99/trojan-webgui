@@ -11,14 +11,11 @@ const clientConfig = JSON.parse(fs.readFileSync(path.join(configDir, "trojan.jso
 const { local_port = 1080 } = clientConfig;
 const { gui: guiCfg, pac: pacCfg } = config;
 
-const pacHost = `http://localhost:${pacCfg.port}/proxy.pac`;
-
-require("./services/pac")({ port: pacCfg.port, assetsDir, pacHost });
+require("./services/pac")({ port: pacCfg.port, assetsDir });
 require("./services/api")({
   port: guiCfg.port,
   pacPort: pacCfg.port,
   proxyPort: local_port,
-  pacHost,
   configDir,
   assetsDir,
   webDir,

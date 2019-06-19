@@ -24,5 +24,8 @@ module.exports = {
 
       return webpack_config;
     },
+    proxy: {
+      "/api": "http://localhost:8080",
+    },
   },
 };
