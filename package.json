@@ -1,6 +1,6 @@
 {
   "name": "trojan-webgui",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "index.js",
   "repository": "git@github.com:itcat99/trojan-webgui.git",
   "author": "FreMaNgo <boping2010@gmail.com>",
@@ -8,13 +8,54 @@
   "scripts": {
     "start": "pm2 start index.js --name trojan",
     "restart": "pm2 restart index.js",
-    "stop": "pm2 stop index.js"
+    "stop": "pm2 stop index.js",
+    "initial": "plume-cli init",
+    "dev": "plume-cli dev",
+    "build": "plume-cli build"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "precise-commits"
+    }
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.5",
+    "@plume/flow": "^0.0.6",
+    "@plume/helper": "^1.0.10",
     "axios": "^0.19.0",
     "express": "^4.17.1",
     "multer": "^1.4.1",
     "pm2": "^3.5.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-loadable": "^5.5.0",
+    "react-router-dom": "^5.0.1",
+    "styled-components": "^4.3.1",
     "systeminformation": "^4.11.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-for-of": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.13.0",
+    "file-loader": "^4.0.0",
+    "handlebars-loader": "^1.7.1",
+    "happypack": "^5.0.1",
+    "husky": "^2.4.1",
+    "postcss-loader": "^3.0.0",
+    "precise-commits": "^1.0.2",
+    "prettier": "^1.18.2",
+    "style-loader": "^0.23.1"
   }
 }

@@ -1,4 +1,4 @@
-const isObject = obj => Object.prototype.toString.call(obj).indexOf("Object") >= 0
+const isObject = obj => Object.prototype.toString.call(obj).indexOf("Object") >= 0;
 
 const deepAssign = (origin, target) => {
   const tempObj = Object.assign({}, origin);
@@ -16,5 +16,5 @@ const deepAssign = (origin, target) => {
 
 module.exports = {
   isObject,
-  deepAssign
+  deepAssign,
 };

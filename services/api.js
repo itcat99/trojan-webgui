@@ -2,7 +2,7 @@ const path = require("path");
 const express = require("express");
 const fs = require("fs");
 // const bodyParser = require('body-parser')
-const multer = require('multer')
+const multer = require("multer");
 // const axios = require("axios");
 // const { spawn } = require("child_process");
 const turnOnAutoPac = require("../scripts/turnOnAutoPac");
@@ -10,18 +10,10 @@ const turnOffAutoPac = require("../scripts/turnOffAutoPac");
 const turnOnGlob = require("../scripts/turnOnGlob");
 const turnOffGlob = require("../scripts/turnOffGlob");
 const upgradePac = require("../scripts/upgradePac");
-const updateConfig = require("../scripts/updateConfig")
-const run = require("../scripts/run")
+const updateConfig = require("../scripts/updateConfig");
+const run = require("../scripts/run");
 
-module.exports = ({
-  port,
-  pacPort,
-  proxyPort,
-  pacHost,
-  webDir,
-  assetsDir,
-  configDir
-}) => {
+module.exports = ({ port, pacPort, proxyPort, pacHost, webDir, assetsDir, configDir }) => {
   const app = express();
   const router = express.Router();
   const upload = multer();
@@ -35,50 +27,48 @@ module.exports = ({
       await turnOnAutoPac(pacHost);
       run({
         configDir,
-        assetsDir
+        assetsDir,
       });
       res.json({
-        type: 'success'
-      })
+        type: "success",
+      });
     } catch (error) {
       res.json({
         type: "error",
-        msg: err
+        msg: error,
       });
 
       res.end();
     }
-  })
+  });
   router.post("/stop", async (req, res) => {
     try {
-      await turnOffAutoPac()
-      await turnOffGlob()
+      await turnOffAutoPac();
+      await turnOffGlob();
 
       res.json({
-        type: 'success'
-      })
+        type: "success",
+      });
     } catch (error) {
       res.json({
         type: "error",
-        msg: err
+        msg: error,
       });
 
       res.end();
     }
-  })
+  });
 
   router.post("/updateClientConfig", upload.array(), (req, res) => {
     const formData = req.body;
     updateConfig(formData);
     res.status(200);
-  })
+  });
   router.get("/clientConfig", (_req, res) => {
-    const clientConfig = fs
-      .readFileSync(path.join(configDir, "client.json"))
-      .toString();
+    const clientConfig = fs.readFileSync(path.join(configDir, "trojan.json")).toString();
     res.json({
       type: "success",
-      msg: clientConfig
+      msg: clientConfig,
     });
   });
 
@@ -86,13 +76,13 @@ module.exports = ({
     upgradePac(pacPort)
       .then(() => {
         res.json({
-          type: "success"
+          type: "success",
         });
       })
       .catch(err => {
         res.json({
           type: "error",
-          msg: err
+          msg: err,
         });
 
         res.end();
@@ -103,17 +93,17 @@ module.exports = ({
     turnOffAutoPac().then(
       () => {
         res.json({
-          type: "success"
+          type: "success",
         });
       },
       err => {
         res.json({
           type: "error",
-          msg: err
+          msg: err,
         });
 
         res.end();
-      }
+      },
     );
   });
 
@@ -121,17 +111,17 @@ module.exports = ({
     turnOnAutoPac(pacHost).then(
       () => {
         res.json({
-          type: "success"
+          type: "success",
         });
       },
       err => {
         res.json({
           type: "error",
-          msg: err
+          msg: err,
         });
 
         res.end();
-      }
+      },
     );
   });
 
@@ -139,17 +129,17 @@ module.exports = ({
     turnOnGlob("127.0.0.1", proxyPort).then(
       () => {
         res.json({
-          type: "success"
+          type: "success",
         });
       },
       err => {
         res.json({
           type: "error",
-          msg: err
+          msg: err,
         });
 
         res.end();
-      }
+      },
     );
   });
 
@@ -157,22 +147,23 @@ module.exports = ({
     turnOffGlob().then(
       () => {
         res.json({
-          type: "success"
+          type: "success",
         });
       },
       err => {
         res.json({
           type: "error",
-          msg: err
+          msg: err,
         });
 
         res.end();
-      }
+      },
     );
   });
 
   app.use("/api", router);
   app.listen(port, () => {
+    /* eslint no-console:0 */
     console.log(`[GUI] server is running http://localhost:${port}`);
   });
 };
