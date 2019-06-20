@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>production</title>
+  <style>
+    #loader {
+      visibility: hidden;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="loader">before loading...</div>
+  <div id="root"></div>
+  <script>
+    setTimeout(() => {
+      var $loader = document.getElementById("loader")
+      if ($loader) $loader.style.visibility = "visible"
+    }, 200);
+  </script>
+  <script src="/vendor.dll.f3b924094b4ccebdae71.js"></script>
+<script type="text/javascript" src="/runtime.fdcc32c7d079ce7fc44b.js"></script><script type="text/javascript" src="/common.9d7793e7e2ad01fd95e4.js"></script><script type="text/javascript" src="/main.dc7d3e86f04bb87e76b3.js"></script></body>
+
+</html>

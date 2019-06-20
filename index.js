@@ -5,7 +5,11 @@ const appService = require("./services/app");
 
 const configDir = path.resolve(__dirname, "config");
 const assetsDir = path.resolve(__dirname, "assets");
-const webDir = path.resolve(__dirname, "web");
+const webDir =
+  process.env.NODE_ENV === "development"
+    ? path.resolve(__dirname, "web")
+    : path.resolve(__dirname, "dist");
+
 const trojanPath = path.resolve(__dirname, "trojan-osx");
 
 const config = JSON.parse(fs.readFileSync(path.join(configDir, "trojan.json")).toString());

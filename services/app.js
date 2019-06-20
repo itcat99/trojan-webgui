@@ -78,7 +78,7 @@ module.exports = ({
   router.post("/updateConfig", upload.array(), async (req, res) => {
     try {
       const formData = req.body;
-      await updateConfig({ config: formData, configDir, assetsDir });
+      await updateConfig({ config: formData, configDir, assetsDir, globPort, pacFilePath });
       res.status(200);
     } catch (err) {
       fail(res, err);
@@ -95,7 +95,7 @@ module.exports = ({
   });
   router.post("/updatePac", async (req, res) => {
     try {
-      await updatePacFile(pacFilePath, pacPort);
+      await updatePacFile(pacFilePath, globPort);
       success(res);
     } catch (error) {
       fail(res, error);

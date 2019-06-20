@@ -43,6 +43,7 @@ export default {
     ssl: {},
     tcp: {},
     mysql: {},
+    proxyMode: "pac",
   },
   reducer: {
     update: (state, payload) => {
@@ -69,10 +70,34 @@ export default {
       const result = deepTake(newConfig, state);
       return { type, ...result };
     },
+    updateproxyMode: (state, mode) => {
+      return Object.assign({}, state, {
+        proxyMode: mode,
+      });
+    },
   },
   effect: {
     start: async () => {
       await axios.post("/api/start");
+    },
+    usePac: async (_payload, actions) => {
+      try {
+        await axios.post("/api/pacon");
+        actions.config.updateproxyMode("pac");
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    useGlob: async (_payload, actions) => {
+      try {
+        await axios.post("/api/globon");
+        actions.config.updateproxyMode("global");
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    updatePacFile: async () => {
+      await axios.post("/api/updatePac");
     },
     getConfig: async (_payload, actions) => {
       const result = await axios.get("/api/getConfig");

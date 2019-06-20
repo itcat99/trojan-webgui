@@ -3,6 +3,8 @@ node_modules
 lib
 __tests__
 example
+assets
+dist
 
 # file
 *.lock

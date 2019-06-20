@@ -17,6 +17,32 @@ class Home extends Component {
     changeType(type);
   };
 
+  usePac = () => {
+    const { usePac } = this.props.actions;
+
+    usePac &&
+      usePac()
+        .then(() => console.log("Used Pac"))
+        .catch(err => console.error(err));
+  };
+
+  useGlob = () => {
+    const { useGlob } = this.props.actions;
+
+    useGlob &&
+      useGlob()
+        .then(() => console.log("Used Glob"))
+        .catch(err => console.error(err));
+  };
+
+  updatePacFile = () => {
+    const { updatePacFile } = this.props.actions;
+    updatePacFile &&
+      updatePacFile()
+        .then(() => console.log("update Pac file successed!"))
+        .catch(err => console.error(err));
+  };
+
   getTypeCmp = type => {
     return (
       <div>
@@ -82,7 +108,7 @@ class Home extends Component {
 
   render() {
     const { state } = this.props;
-    const { type, basic, ssl, tcp, mysql } = state;
+    const { type, basic, ssl, tcp, mysql, proxyMode } = state;
     console.log("state: ", state);
     return (
       <div>
@@ -105,7 +131,11 @@ class Home extends Component {
             </>
           ) : null}
         </form>
+        <div>Proxy Mode: {proxyMode}</div>
         <button onClick={this.start}>start</button>
+        <button onClick={this.usePac}>use pac</button>
+        <button onClick={this.useGlob}>use global</button>
+        <button onClick={this.updatePacFile}>update pac file</button>
         <button onClick={this.save}>save</button>
         <button form="config" type="reset">
           reset

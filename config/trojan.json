@@ -1,7 +1,7 @@
 {
   "run_type": "client",
   "local_addr": "127.0.0.1",
-  "local_port": "1087",
+  "local_port": "1086",
   "remote_addr": "fremango.com",
   "remote_port": "443",
   "password": ["741852963"],
