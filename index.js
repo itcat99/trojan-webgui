@@ -1,21 +1,30 @@
-const path = require("path");
 const fs = require("fs");
+const path = require("path");
+const pacService = require("./services/pac");
+const appService = require("./services/app");
 
 const configDir = path.resolve(__dirname, "config");
 const assetsDir = path.resolve(__dirname, "assets");
 const webDir = path.resolve(__dirname, "web");
+const trojanPath = path.resolve(__dirname, "trojan-osx");
 
-const config = JSON.parse(fs.readFileSync(path.join(configDir, "app.json")).toString());
-const clientConfig = JSON.parse(fs.readFileSync(path.join(configDir, "trojan.json")).toString());
+const config = JSON.parse(fs.readFileSync(path.join(configDir, "trojan.json")).toString());
+const settings = JSON.parse(fs.readFileSync(path.join(configDir, "app.json")).toString());
 
-const { local_port = 1080 } = clientConfig;
-const { gui: guiCfg, pac: pacCfg } = config;
+/* set APP_CONFIG in process.env */
+process.env.APP_CONFIG = JSON.stringify(settings);
 
-require("./services/pac")({ port: pacCfg.port, assetsDir });
-require("./services/api")({
-  port: guiCfg.port,
-  pacPort: pacCfg.port,
-  proxyPort: local_port,
+const { local_port } = config;
+const { port, proxyType } = settings;
+const { app, pac } = port;
+
+pacService({ port: pac, assetsDir });
+appService({
+  trojanPath,
+  appPort: app,
+  pacPort: pac,
+  globPort: local_port,
+  proxyType,
   configDir,
   assetsDir,
   webDir,

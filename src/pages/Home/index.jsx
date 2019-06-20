@@ -6,6 +6,7 @@ class Home extends Component {
   componentDidMount() {
     const { getConfig } = this.props.actions;
 
+    /* eslint no-console:0 */
     getConfig().then(() => {}, err => console.error(err));
   }
 
@@ -29,25 +30,29 @@ class Home extends Component {
     );
   };
 
-  getCmp = data => {
+  getCmp = (data, name) => {
     const result = [];
 
     for (const key of Object.keys(data)) {
+      let viewKey = key;
       const val = data[key];
+      if (key === "password" && name === "mysql") {
+        viewKey = "mysql_password";
+      }
 
       result.push(
-        <div key={`${key}`}>
-          <label htmlFor={key}>{key}: </label>
-          {this.isSelect(key) ? (
+        <div key={`${viewKey}`}>
+          <label htmlFor={viewKey}>{key}: </label>
+          {this.isSelect(viewKey) ? (
             <>
-              <select id={key} name={key} defaultValue={`${val}`}>
+              <select id={viewKey} name={viewKey} defaultValue={`${val}`}>
                 <option value="true">true</option>
                 <option value="false">false</option>
               </select>
             </>
           ) : (
             <>
-              <input id={key} name={key} defaultValue={val}></input>
+              <input id={viewKey} name={viewKey} defaultValue={val}></input>
             </>
           )}
         </div>,
@@ -59,25 +64,52 @@ class Home extends Component {
 
   isSelect = key => CATEGOTE_SELECT.indexOf(key) >= 0;
 
+  submit = e => {
+    e.preventDefault();
+  };
+
+  save = () => {
+    const config = new FormData(this.form);
+    const { updateConfig } = this.props.actions;
+    updateConfig(config);
+  };
+
+  start = () => {
+    const { start } = this.props.actions;
+
+    start && start();
+  };
+
   render() {
     const { state } = this.props;
     const { type, basic, ssl, tcp, mysql } = state;
-
-    console.log("props", type);
+    console.log("state: ", state);
     return (
       <div>
-        {this.getTypeCmp(type)}
-        {this.getCmp(basic)}
-        <h3>SSL</h3>
-        {this.getCmp(ssl)}
-        <h3>TCP</h3>
-        {this.getCmp(tcp)}
-        {type === SERVER ? (
-          <>
-            <h3>MYSQL</h3>
-            {this.getCmp(mysql)}
-          </>
-        ) : null}
+        <form
+          id="config"
+          ref={el => (this.form = el)}
+          onSubmit={this.submit}
+          encType="multipart/form-data"
+        >
+          {this.getTypeCmp(type)}
+          {this.getCmp(basic, "basic")}
+          <h3>SSL</h3>
+          {this.getCmp(ssl, "ssl")}
+          <h3>TCP</h3>
+          {this.getCmp(tcp, "tcp")}
+          {type === SERVER ? (
+            <>
+              <h3>MYSQL</h3>
+              {this.getCmp(mysql, "mysql")}
+            </>
+          ) : null}
+        </form>
+        <button onClick={this.start}>start</button>
+        <button onClick={this.save}>save</button>
+        <button form="config" type="reset">
+          reset
+        </button>
       </div>
     );
   }

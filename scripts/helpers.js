@@ -14,7 +14,12 @@ const deepAssign = (origin, target) => {
   return tempObj;
 };
 
+const success = (res, msg) => res.json({ type: "success", msg });
+const fail = (res, msg) => res.json({ type: "fail", msg });
+
 module.exports = {
   isObject,
   deepAssign,
+  success,
+  fail,
 };

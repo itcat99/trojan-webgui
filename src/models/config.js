@@ -1,4 +1,4 @@
-import { CLIENT, FORWARD, SERVER, BASIC, SSL, TCP, MYSQL } from "constants";
+import { BASIC, SSL, TCP, MYSQL } from "constants";
 import axios from "axios";
 
 const isObject = obj => Object.prototype.toString.call(obj).indexOf("Object") >= 0;
@@ -53,11 +53,8 @@ export default {
         basic: Object.assign({}, BASIC.common, BASIC[run_type], others),
         ssl: Object.assign({}, SSL.common, SSL[run_type], ssl),
         tcp: Object.assign({}, TCP.common, TCP[run_type], tcp),
+        mysql: Object.assign({}, MYSQL.common, MYSQL[run_type], mysql),
       };
-
-      if (run_type === SERVER) {
-        newConfig.mysql = Object.assign({}, MYSQL, mysql);
-      }
 
       return deepAssign(currentState, newConfig);
     },
@@ -66,30 +63,31 @@ export default {
         basic: Object.assign({}, BASIC.common, BASIC[type]),
         ssl: Object.assign({}, SSL.common, SSL[type]),
         tcp: Object.assign({}, TCP.common, TCP[type]),
+        mysql: Object.assign({}, MYSQL.common, MYSQL[type]),
       };
 
-      if (type === SERVER) {
-        console.log("is ===");
-        newConfig.mysql = Object.assign({}, MYSQL);
-      }
-
       const result = deepTake(newConfig, state);
-      console.log("====", result);
       return { type, ...result };
     },
   },
   effect: {
+    start: async () => {
+      await axios.post("/api/start");
+    },
     getConfig: async (_payload, actions) => {
-      const result = await axios.get("/api/trojanConfig");
+      const result = await axios.get("/api/getConfig");
       const { msg } = result.data;
 
-      actions.config.update(JSON.parse(msg));
+      actions.config.update(msg);
     },
-    asyncPlus: async actions => {
-      setTimeout(() => actions["config"].plus(), 300);
-    },
-    asyncMinus: async actions => {
-      setTimeout(() => actions["config"].minus(), 300);
+
+    updateConfig: async (payload, actions) => {
+      try {
+        await axios.post("/api/updateConfig", payload);
+        await actions.config.getConfig();
+      } catch (error) {
+        throw new Error(error);
+      }
     },
   },
 };

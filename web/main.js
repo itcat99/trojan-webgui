@@ -174,7 +174,7 @@ window.onload = function() {
       const config = new FormData(this);
       instance({
         method: "post",
-        url: "/updateClientConfig",
+        url: "/upgradeTrojanConfig",
         data: config,
       }).then(result => {}, err => console.error(err));
     });

@@ -1,19 +1,35 @@
+const fs = require("fs");
 const path = require("path");
 const express = require("express");
-const fs = require("fs");
-// const bodyParser = require('body-parser')
 const multer = require("multer");
-// const axios = require("axios");
-// const { spawn } = require("child_process");
-const turnOnAutoPac = require("../scripts/turnOnAutoPac");
-const turnOffAutoPac = require("../scripts/turnOffAutoPac");
-const turnOnGlob = require("../scripts/turnOnGlob");
-const turnOffGlob = require("../scripts/turnOffGlob");
-const upgradePac = require("../scripts/upgradePac");
-const updateConfig = require("../scripts/updateConfig");
-const run = require("../scripts/run");
 
-module.exports = ({ port, pacPort, proxyPort, webDir, assetsDir, configDir }) => {
+/* ctl pac */
+const usePacProxy = require("../scripts/usePacProxy");
+const useGlobProxy = require("../scripts/useGlobProxy");
+const updatePacFile = require("../scripts/updatePacFile");
+
+/* ctl config */
+const updateConfig = require("../scripts/updateConfig");
+const updateSettings = require("../scripts/updateSettings");
+
+/* ctl */
+const start = require("../scripts/start");
+const restart = require("../scripts/restart");
+const stop = require("../scripts/stop");
+const exit = require("../scripts/exit");
+
+const { success, fail } = require("../scripts/helpers");
+
+module.exports = ({
+  appPort,
+  pacPort,
+  globPort,
+  proxyType,
+  webDir,
+  assetsDir,
+  configDir,
+  trojanPath,
+}) => {
   const app = express();
   const router = express.Router();
   const upload = multer();
@@ -22,148 +38,83 @@ module.exports = ({ port, pacPort, proxyPort, webDir, assetsDir, configDir }) =>
   app.use(express.static(assetsDir));
   app.use(express.static(configDir));
 
+  const pacFilePath = path.join(assetsDir, "gfwlist.pac");
+
+  router.get("/getConfig", (req, res) => {
+    try {
+      const config = JSON.parse(fs.readFileSync(path.join(configDir, "trojan.json")).toString());
+      success(res, config);
+    } catch (err) {
+      fail(res, err);
+    }
+  });
+
   router.post("/start", async (req, res) => {
     try {
-      await turnOnAutoPac(pacPort);
-      run({
-        configDir,
-        assetsDir,
-      });
-      res.json({
-        type: "success",
-      });
-    } catch (error) {
-      res.json({
-        type: "error",
-        msg: error,
-      });
-
-      res.end();
+      start({ configDir, assetsDir, proxyType, pacPort, globPort, trojanPath });
+      success(res);
+    } catch (err) {
+      fail(res, err);
     }
   });
-  router.post("/stop", async (req, res) => {
+  router.post("/restart", (req, res) => {
+    restart({ configDir, assetsDir, trojanPath })
+      .then(() => success(res))
+      .then(err => fail(res, err));
+  });
+  router.post("/stop", (req, res) => {
+    stop()
+      .then(() => success(res))
+      .then(err => fail(res, err));
+  });
+  router.post("/exit", (req, res) => {
     try {
-      await turnOffAutoPac();
-      await turnOffGlob();
-
-      res.json({
-        type: "success",
-      });
-    } catch (error) {
-      res.json({
-        type: "error",
-        msg: error,
-      });
-
-      res.end();
+      exit();
+      res.status(200);
+    } catch (err) {
+      fail(res, err);
     }
   });
-
-  router.post("/updateClientConfig", upload.array(), (req, res) => {
-    const formData = req.body;
-    updateConfig(formData);
-    res.status(200);
+  router.post("/updateConfig", upload.array(), async (req, res) => {
+    try {
+      const formData = req.body;
+      await updateConfig({ config: formData, configDir, assetsDir });
+      res.status(200);
+    } catch (err) {
+      fail(res, err);
+    }
   });
-  router.get("/trojanConfig", (_req, res) => {
-    const clientConfig = fs.readFileSync(path.join(configDir, "trojan.json")).toString();
-    res.json({
-      type: "success",
-      msg: clientConfig,
-    });
+  router.post("/updateSettings", upload.array(), async (req, res) => {
+    try {
+      const formData = req.body;
+      updateSettings(formData);
+      res.status(200);
+    } catch (err) {
+      fail(res, err);
+    }
   });
-
-  router.get("/upgrade", (_req, res) => {
-    upgradePac(pacPort)
-      .then(() => {
-        res.json({
-          type: "success",
-        });
-      })
-      .catch(err => {
-        res.json({
-          type: "error",
-          msg: err,
-        });
-
-        res.end();
-      });
+  router.post("/updatePac", async (req, res) => {
+    try {
+      await updatePacFile(pacFilePath, pacPort);
+      success(res);
+    } catch (error) {
+      fail(res, error);
+    }
   });
-
-  router.post("/pacoff", (_req, res) => {
-    turnOffAutoPac().then(
-      () => {
-        res.json({
-          type: "success",
-        });
-      },
-      err => {
-        res.json({
-          type: "error",
-          msg: err,
-        });
-
-        res.end();
-      },
-    );
+  router.post("/pacon", (req, res) => {
+    usePacProxy(pacPort)
+      .then(() => success(res))
+      .catch(err => fail(res, err));
   });
-
-  router.post("/pacon", (_req, res) => {
-    turnOnAutoPac(pacPort).then(
-      () => {
-        res.json({
-          type: "success",
-        });
-      },
-      err => {
-        res.json({
-          type: "error",
-          msg: err,
-        });
-
-        res.end();
-      },
-    );
-  });
-
-  router.post("/globon", (_req, res) => {
-    turnOnGlob("127.0.0.1", proxyPort).then(
-      () => {
-        res.json({
-          type: "success",
-        });
-      },
-      err => {
-        res.json({
-          type: "error",
-          msg: err,
-        });
-
-        res.end();
-      },
-    );
-  });
-
-  router.post("/globoff", (_req, res) => {
-    turnOffGlob().then(
-      () => {
-        res.json({
-          type: "success",
-        });
-      },
-      err => {
-        res.json({
-          type: "error",
-          msg: err,
-        });
-
-        res.end();
-      },
-    );
+  router.post("/globon", (req, res) => {
+    useGlobProxy(globPort)
+      .then(() => success(res))
+      .catch(err => fail(res, err));
   });
 
   app.use("/api", router);
-  app.listen(port, () => {
+  app.listen(appPort, () => {
     /* eslint no-console:0 */
-    console.log(`[GUI] server is running http://localhost:${port}`);
+    console.log(`[APP] server is running http://localhost:${appPort}`);
   });
 };

@@ -1,8 +1,8 @@
 {
-  "pac": {
-    "port": 1081
+  "port": {
+    "app": 8080,
+    "pac": 1081
   },
-  "gui": {
-    "port": 8080
-  }
+  "proxyType": "pac",
+  "start": false
 }

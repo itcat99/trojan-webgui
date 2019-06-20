@@ -3,7 +3,7 @@
  * GFWList Last-Modified: 2019-05-23 00:27:18
  */
 
-var proxy = "SOCKS5 127.0.0.1:1088";
+var proxy = "SOCKS5 127.0.0.1:1087";
 var rules = [
   [[], []],
   [
@@ -85,7 +85,7 @@ var rules = [
       "yatsen.gov.tw",
       "yda.gov.tw",
       "youdao.com",
-      "zhongsou.com"
+      "zhongsou.com",
     ],
     [
       "030buy.com",
@@ -5547,9 +5547,9 @@ var rules = [
       "zyzc9.com",
       "zzcartoon.com",
       "zzcloud.me",
-      "zzux.com"
-    ]
-  ]
+      "zzux.com",
+    ],
+  ],
 ];
 
 var lastRule = "";
@@ -5566,8 +5566,7 @@ function testHost(host, index) {
   for (var i = 0; i < rules[index].length; i++) {
     for (var j = 0; j < rules[index][i].length; j++) {
       lastRule = rules[index][i][j];
-      if (host == lastRule || host.endsWith("." + lastRule))
-        return i % 2 == 0 ? "DIRECT" : proxy;
+      if (host == lastRule || host.endsWith("." + lastRule)) return i % 2 == 0 ? "DIRECT" : proxy;
     }
   }
   lastRule = "";
