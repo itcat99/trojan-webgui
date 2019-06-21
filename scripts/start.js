@@ -5,12 +5,13 @@ const path = require("path");
 /* ctl pac */
 const usePacProxy = require("../scripts/usePacProxy");
 const useGlobProxy = require("../scripts/useGlobProxy");
+const { ASSETSDIR, CONFIG, TROJAN } = require("../scripts/constants");
 
-const startTrojan = ({ trojanPath, configPath, logPath }) => {
+const startTrojan = ({ logPath }) => {
   let msg = "";
 
   return new Promise((resolve, reject) => {
-    const result = spawn(trojanPath, ["--config", `${configPath}`, "--log", `${logPath}`]);
+    const result = spawn(TROJAN, ["--config", `${CONFIG}`, "--log", `${logPath}`]);
     console.log("trojan start");
     result.stdout.on("data", data => {
       process.stdout.write(`${data.toString()}\r`);
@@ -29,13 +30,12 @@ const startTrojan = ({ trojanPath, configPath, logPath }) => {
   });
 };
 
-module.exports = async ({ configDir, assetsDir, proxyType, pacPort, globPort, trojanPath }) => {
-  const configPath = path.join(configDir, "trojan.json");
-  const logPath = path.join(assetsDir, "info.log");
+module.exports = async ({ proxyType, pacPort, globPort }) => {
+  const logPath = path.join(ASSETSDIR, "info.log");
 
   try {
     proxyType === "pac" ? await usePacProxy(pacPort) : await useGlobProxy(globPort);
-    await startTrojan({ trojanPath, configPath, logPath });
+    await startTrojan(logPath);
   } catch (err) {
     throw new Error(err);
   }

@@ -4,5 +4,5 @@
     "pac": 1081
   },
   "proxyType": "pac",
-  "start": false
+  "start": true
 }

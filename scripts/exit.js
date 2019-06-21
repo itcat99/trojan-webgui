@@ -5,7 +5,7 @@ const stop = require("./stop");
 module.exports = () => {
   stop()
     .then(() => {
-      execSync("pm2 delete trojan");
+      execSync("yarn delete");
     })
     /* eslint no-console:0 */
     .catch(err => console.error(err));

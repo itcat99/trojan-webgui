@@ -1,4 +1,3 @@
-const fs = require("fs");
 const path = require("path");
 const express = require("express");
 const multer = require("multer");
@@ -18,31 +17,37 @@ const restart = require("../scripts/restart");
 const stop = require("../scripts/stop");
 const exit = require("../scripts/exit");
 
-const { success, fail } = require("../scripts/helpers");
+const { success, fail, getSettings, getConfig } = require("../scripts/helpers");
+const { WEBDIR, CONFIGDIR, ASSETSDIR } = require("../scripts/constants");
 
-module.exports = ({
-  appPort,
-  pacPort,
-  globPort,
-  proxyType,
-  webDir,
-  assetsDir,
-  configDir,
-  trojanPath,
-}) => {
+module.exports = ({ appPort, pacPort, globPort, proxyType }) => {
   const app = express();
   const router = express.Router();
   const upload = multer();
 
-  app.use(express.static(webDir));
-  app.use(express.static(assetsDir));
-  app.use(express.static(configDir));
+  app.use(express.static(WEBDIR));
+  app.use(express.static(ASSETSDIR));
+  app.use(express.static(CONFIGDIR));
 
-  const pacFilePath = path.join(assetsDir, "gfwlist.pac");
+  const pacFilePath = path.join(ASSETSDIR, "gfwlist.pac");
+  const settings = getSettings();
+
+  if (settings.start) {
+    start({ proxyType, pacPort, globPort }).then(
+      () => console.log("Start"),
+      err => console.error(err),
+    );
+  }
+
+  router.get("/status", (_req, res) => {
+    const config = getSettings();
+    console.log("config: ", config);
+    res.json(config);
+  });
 
   router.get("/getConfig", (req, res) => {
     try {
-      const config = JSON.parse(fs.readFileSync(path.join(configDir, "trojan.json")).toString());
+      const config = getConfig();
       success(res, config);
     } catch (err) {
       fail(res, err);
@@ -51,21 +56,32 @@ module.exports = ({
 
   router.post("/start", async (req, res) => {
     try {
-      start({ configDir, assetsDir, proxyType, pacPort, globPort, trojanPath });
+      updateSettings({ start: true });
+      await start({ proxyType, pacPort, globPort });
       success(res);
     } catch (err) {
       fail(res, err);
     }
   });
-  router.post("/restart", (req, res) => {
-    restart({ configDir, assetsDir, trojanPath })
-      .then(() => success(res))
-      .then(err => fail(res, err));
+
+  router.post("/restart", async (req, res) => {
+    try {
+      updateSettings({ start: true });
+      await restart();
+      success(res);
+    } catch (err) {
+      fail(res, err);
+    }
   });
-  router.post("/stop", (req, res) => {
-    stop()
-      .then(() => success(res))
-      .then(err => fail(res, err));
+
+  router.post("/stop", async (req, res) => {
+    try {
+      updateSettings({ start: false });
+      await stop();
+      success(res);
+    } catch (err) {
+      fail(res, err);
+    }
   });
   router.post("/exit", (req, res) => {
     try {
@@ -78,7 +94,7 @@ module.exports = ({
   router.post("/updateConfig", upload.array(), async (req, res) => {
     try {
       const formData = req.body;
-      await updateConfig({ config: formData, configDir, assetsDir, globPort, pacFilePath });
+      await updateConfig({ config: formData, globPort, pacFilePath });
       res.status(200);
     } catch (err) {
       fail(res, err);
@@ -103,12 +119,18 @@ module.exports = ({
   });
   router.post("/pacon", (req, res) => {
     usePacProxy(pacPort)
-      .then(() => success(res))
+      .then(() => {
+        updateSettings({ proxyType: "pac" });
+        success(res);
+      })
       .catch(err => fail(res, err));
   });
   router.post("/globon", (req, res) => {
     useGlobProxy(globPort)
-      .then(() => success(res))
+      .then(() => {
+        updateSettings({ proxyType: "glob" });
+        success(res);
+      })
       .catch(err => fail(res, err));
   });
 

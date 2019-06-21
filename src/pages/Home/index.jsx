@@ -4,10 +4,12 @@ import { createContainer } from "@plume/flow";
 
 class Home extends Component {
   componentDidMount() {
-    const { getConfig } = this.props.actions;
+    const { getConfig, getStatus } = this.props.actions;
 
     /* eslint no-console:0 */
+    console.log("did mount");
     getConfig().then(() => {}, err => console.error(err));
+    getStatus().then(() => {}, err => console.error(err));
   }
 
   changeType = e => {
@@ -106,9 +108,27 @@ class Home extends Component {
     start && start();
   };
 
+  stop = () => {
+    const { stop } = this.props.actions;
+
+    stop && stop();
+  };
+
+  exit = () => {
+    const { exit } = this.props.actions;
+
+    exit && exit();
+  };
+
+  getStatus = () => {
+    const { getStatus } = this.props.actions;
+
+    getStatus && getStatus();
+  };
+
   render() {
     const { state } = this.props;
-    const { type, basic, ssl, tcp, mysql, proxyMode } = state;
+    const { type, basic, ssl, tcp, mysql, proxyMode, started } = state;
     console.log("state: ", state);
     return (
       <div>
@@ -131,15 +151,38 @@ class Home extends Component {
             </>
           ) : null}
         </form>
-        <div>Proxy Mode: {proxyMode}</div>
-        <button onClick={this.start}>start</button>
-        <button onClick={this.usePac}>use pac</button>
-        <button onClick={this.useGlob}>use global</button>
+        {/* <div>Proxy Mode: {proxyMode}</div> */}
+        <button
+          style={started ? { background: "rgb(100,200,100)", color: "#fff" } : null}
+          onClick={this.start}
+        >
+          start
+        </button>
+        <button
+          style={!started ? { background: "rgb(100,200,100)", color: "#fff" } : null}
+          onClick={this.stop}
+        >
+          stop
+        </button>
+        <button onClick={this.getStatus}>get status</button>
+        <button
+          style={proxyMode === "pac" ? { background: "rgb(100,200,100)", color: "#fff" } : null}
+          onClick={this.usePac}
+        >
+          use pac
+        </button>
+        <button
+          style={proxyMode === "pac" ? null : { background: "rgb(100,200,100)", color: "#fff" }}
+          onClick={this.useGlob}
+        >
+          use global
+        </button>
         <button onClick={this.updatePacFile}>update pac file</button>
         <button onClick={this.save}>save</button>
         <button form="config" type="reset">
           reset
         </button>
+        <button onClick={this.exit}>Exit</button>
       </div>
     );
   }

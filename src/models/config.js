@@ -38,6 +38,7 @@ const deepTake = (origin, target) => {
 export default {
   namespace: "config",
   state: {
+    started: false,
     type: "client",
     basic: {},
     ssl: {},
@@ -46,6 +47,10 @@ export default {
     proxyMode: "pac",
   },
   reducer: {
+    updateState: (state, payload) => {
+      return Object.assign({}, state, payload);
+    },
+    started: (state, payload) => Object.assign({}, state, { started: !!payload }),
     update: (state, payload) => {
       const { run_type, ssl, tcp, mysql, ...others } = payload;
       const currentState = Object.assign({}, state);
@@ -77,8 +82,29 @@ export default {
     },
   },
   effect: {
-    start: async () => {
+    getStatus: async (_payload, actions) => {
+      const result = await axios.get("/api/status");
+      const config = result.data;
+      const { start, proxyType } = config;
+
+      actions.config.updateState({
+        started: start,
+        proxyMode: proxyType,
+      });
+    },
+    start: async (_payload, actions) => {
       await axios.post("/api/start");
+      actions.config.started(true);
+    },
+    stop: async (_payload, actions) => {
+      await axios.post("/api/stop");
+      actions.config.started(false);
+    },
+    exit: async (_payload, actions) => {
+      await axios.post("/api/exit");
+      actions.config.updateState({
+        started: false,
+      });
     },
     usePac: async (_payload, actions) => {
       try {

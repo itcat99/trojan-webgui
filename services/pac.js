@@ -1,13 +1,13 @@
 /* eslint no-console:0 */
 const path = require("path");
 const express = require("express");
+const { ASSETSDIR } = require("../scripts/constants");
 
-module.exports = config => {
+module.exports = port => {
   const pac = express();
-  const { port, assetsDir } = config;
 
   pac.get("/proxy.pac", (req, res) => {
-    res.sendFile(path.join(assetsDir, "gfwlist.pac"), err => {
+    res.sendFile(path.join(ASSETSDIR, "gfwlist.pac"), err => {
       err && console.error(err);
     });
   });

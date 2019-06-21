@@ -1,0 +1,181 @@
+[2019-06-21 16:38:52] [WARN] trojan service (client) started at 127.0.0.1:1086
+[2019-06-21 16:38:53] [ALL] 127.0.0.1:58807 incoming connection
+[2019-06-21 16:38:53] [INFO] 127.0.0.1:58807 requested connection to mtalk.google.com:443
+[2019-06-21 16:38:53] [ALL] 127.0.0.1:58807 tunnel established
+[2019-06-21 16:38:53] [ALL] 127.0.0.1:58807 SSL session not reused
+[2019-06-21 16:38:58] [ALL] 127.0.0.1:58838 incoming connection
+[2019-06-21 16:38:58] [ALL] 127.0.0.1:58839 incoming connection
+[2019-06-21 16:38:58] [INFO] 127.0.0.1:58838 requested connection to live.github.com:443
+[2019-06-21 16:38:58] [INFO] 127.0.0.1:58839 requested connection to live.github.com:443
+[2019-06-21 16:38:59] [ALL] 127.0.0.1:58838 tunnel established
+[2019-06-21 16:38:59] [ALL] 127.0.0.1:58838 SSL session reused
+[2019-06-21 16:38:59] [ALL] 127.0.0.1:58839 tunnel established
+[2019-06-21 16:38:59] [ALL] 127.0.0.1:58839 SSL session reused
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58850 incoming connection
+[2019-06-21 16:39:01] [INFO] 127.0.0.1:58850 requested connection to www.google.com:443
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58852 incoming connection
+[2019-06-21 16:39:01] [INFO] 127.0.0.1:58852 requested connection to www.google.com:443
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58858 incoming connection
+[2019-06-21 16:39:01] [INFO] 127.0.0.1:58858 requested connection to www.google.com:443
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58850 tunnel established
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58850 SSL session reused
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58860 incoming connection
+[2019-06-21 16:39:01] [INFO] 127.0.0.1:58860 requested connection to www.google.com:443
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58862 incoming connection
+[2019-06-21 16:39:01] [INFO] 127.0.0.1:58862 requested connection to www.google.com:443
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58852 tunnel established
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58852 SSL session not reused
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58858 tunnel established
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58858 SSL session not reused
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58860 tunnel established
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58860 SSL session reused
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58864 incoming connection
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58865 incoming connection
+[2019-06-21 16:39:01] [INFO] 127.0.0.1:58864 requested connection to ssl.gstatic.com:443
+[2019-06-21 16:39:01] [INFO] 127.0.0.1:58865 requested connection to lh3.googleusercontent.com:443
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58866 incoming connection
+[2019-06-21 16:39:01] [INFO] 127.0.0.1:58866 requested connection to www.gstatic.com:443
+[2019-06-21 16:39:01] [ALL] 127.0.0.1:58868 incoming connection
+[2019-06-21 16:39:01] [INFO] 127.0.0.1:58868 requested connection to apis.google.com:443
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58862 tunnel established
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58862 SSL session reused
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58864 tunnel established
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58864 SSL session reused
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58866 tunnel established
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58866 SSL session reused
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58865 tunnel established
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58865 SSL session reused
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58868 tunnel established
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58868 SSL session reused
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58876 incoming connection
+[2019-06-21 16:39:02] [INFO] 127.0.0.1:58876 requested connection to clients4.google.com:443
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58876 tunnel established
+[2019-06-21 16:39:02] [ALL] 127.0.0.1:58876 SSL session reused
+[2019-06-21 16:39:03] [ALL] 127.0.0.1:58878 incoming connection
+[2019-06-21 16:39:03] [INFO] 127.0.0.1:58878 requested connection to encrypted-tbn0.gstatic.com:443
+[2019-06-21 16:39:03] [ALL] 127.0.0.1:58880 incoming connection
+[2019-06-21 16:39:03] [INFO] 127.0.0.1:58880 requested connection to encrypted-tbn0.gstatic.com:443
+[2019-06-21 16:39:03] [ALL] 127.0.0.1:58878 tunnel established
+[2019-06-21 16:39:03] [ALL] 127.0.0.1:58878 SSL session reused
+[2019-06-21 16:39:03] [ALL] 127.0.0.1:58880 tunnel established
+[2019-06-21 16:39:03] [ALL] 127.0.0.1:58880 SSL session reused
+[2019-06-21 16:39:08] [ALL] 127.0.0.1:58910 incoming connection
+[2019-06-21 16:39:08] [INFO] 127.0.0.1:58910 requested connection to asdasd:80
+[2019-06-21 16:39:08] [ALL] 127.0.0.1:58912 incoming connection
+[2019-06-21 16:39:08] [INFO] 127.0.0.1:58912 requested connection to fonts.gstatic.com:443
+[2019-06-21 16:39:08] [ALL] 127.0.0.1:58914 incoming connection
+[2019-06-21 16:39:08] [INFO] 127.0.0.1:58914 requested connection to play.google.com:443
+[2019-06-21 16:39:08] [ALL] 127.0.0.1:58910 tunnel established
+[2019-06-21 16:39:08] [ALL] 127.0.0.1:58910 SSL session reused
+[2019-06-21 16:39:08] [ALL] 127.0.0.1:58912 tunnel established
+[2019-06-21 16:39:08] [ALL] 127.0.0.1:58912 SSL session reused
+[2019-06-21 16:39:08] [ALL] 127.0.0.1:58914 tunnel established
+[2019-06-21 16:39:08] [ALL] 127.0.0.1:58914 SSL session reused
+[2019-06-21 16:39:08] [INFO] 127.0.0.1:58910 disconnected, 0 bytes received, 308 bytes sent, lasted for 0 seconds
+[2019-06-21 16:39:08] [INFO] 127.0.0.1:58880 disconnected, 4317 bytes received, 581 bytes sent, lasted for 5 seconds
+[2019-06-21 16:39:12] [INFO] 127.0.0.1:58852 disconnected, 212 bytes received, 640 bytes sent, lasted for 11 seconds
+[2019-06-21 16:39:12] [INFO] 127.0.0.1:58858 disconnected, 2646 bytes received, 581 bytes sent, lasted for 11 seconds
+[2019-06-21 16:39:12] [INFO] 127.0.0.1:58860 disconnected, 2646 bytes received, 581 bytes sent, lasted for 11 seconds
+[2019-06-21 16:39:25] [INFO] 127.0.0.1:58868 disconnected, 776 bytes received, 641 bytes sent, lasted for 24 seconds
+[2019-06-21 16:39:25] [INFO] 127.0.0.1:58912 disconnected, 4316 bytes received, 581 bytes sent, lasted for 17 seconds
+[2019-06-21 16:39:25] [INFO] 127.0.0.1:58865 disconnected, 4981 bytes received, 581 bytes sent, lasted for 24 seconds
+[2019-06-21 16:39:25] [INFO] 127.0.0.1:58914 disconnected, 4317 bytes received, 581 bytes sent, lasted for 17 seconds
+[2019-06-21 16:39:25] [INFO] 127.0.0.1:58864 disconnected, 776 bytes received, 641 bytes sent, lasted for 24 seconds
+[2019-06-21 16:39:25] [ALL] 127.0.0.1:59000 incoming connection
+[2019-06-21 16:39:25] [INFO] 127.0.0.1:59000 requested connection to ssl.gstatic.com:443
+[2019-06-21 16:39:25] [ALL] 127.0.0.1:59002 incoming connection
+[2019-06-21 16:39:25] [INFO] 127.0.0.1:59002 requested connection to lh3.googleusercontent.com:443
+[2019-06-21 16:39:25] [ALL] 127.0.0.1:59003 incoming connection
+[2019-06-21 16:39:25] [INFO] 127.0.0.1:59003 requested connection to apis.google.com:443
+[2019-06-21 16:39:25] [ALL] 127.0.0.1:59002 tunnel established
+[2019-06-21 16:39:25] [ALL] 127.0.0.1:59002 SSL session reused
+[2019-06-21 16:39:25] [ALL] 127.0.0.1:59000 tunnel established
+[2019-06-21 16:39:25] [ALL] 127.0.0.1:59000 SSL session reused
+[2019-06-21 16:39:25] [ALL] 127.0.0.1:59003 tunnel established
+[2019-06-21 16:39:25] [ALL] 127.0.0.1:59003 SSL session reused
+[2019-06-21 16:39:52] [WARN] got signal: 2
+[2019-06-21 16:39:52] [WARN] trojan service stopped
+[2019-06-21 16:40:05] [WARN] trojan service (client) started at 127.0.0.1:1086
+[2019-06-21 16:40:06] [ALL] 127.0.0.1:59199 incoming connection
+[2019-06-21 16:40:06] [INFO] 127.0.0.1:59199 requested connection to www.googleapis.com:443
+[2019-06-21 16:40:10] [ALL] 127.0.0.1:59199 tunnel established
+[2019-06-21 16:40:10] [ALL] 127.0.0.1:59199 SSL session not reused
+[2019-06-21 16:40:11] [ALL] 127.0.0.1:59223 incoming connection
+[2019-06-21 16:40:11] [ALL] 127.0.0.1:59224 incoming connection
+[2019-06-21 16:40:11] [INFO] 127.0.0.1:59223 requested connection to live.github.com:443
+[2019-06-21 16:40:11] [INFO] 127.0.0.1:59224 requested connection to live.github.com:443
+[2019-06-21 16:40:11] [ALL] 127.0.0.1:59224 tunnel established
+[2019-06-21 16:40:11] [ALL] 127.0.0.1:59224 SSL session reused
+[2019-06-21 16:40:11] [ALL] 127.0.0.1:59223 tunnel established
+[2019-06-21 16:40:11] [ALL] 127.0.0.1:59223 SSL session reused
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59235 incoming connection
+[2019-06-21 16:40:13] [INFO] 127.0.0.1:59235 requested connection to www.google.com:443
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59237 incoming connection
+[2019-06-21 16:40:13] [INFO] 127.0.0.1:59237 requested connection to www.google.com:443
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59239 incoming connection
+[2019-06-21 16:40:13] [INFO] 127.0.0.1:59239 requested connection to www.google.com:443
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59235 tunnel established
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59235 SSL session reused
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59241 incoming connection
+[2019-06-21 16:40:13] [INFO] 127.0.0.1:59241 requested connection to www.google.com:443
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59243 incoming connection
+[2019-06-21 16:40:13] [INFO] 127.0.0.1:59243 requested connection to www.google.com:443
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59237 tunnel established
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59237 SSL session reused
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59239 tunnel established
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59239 SSL session not reused
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59245 incoming connection
+[2019-06-21 16:40:13] [INFO] 127.0.0.1:59245 requested connection to ssl.gstatic.com:443
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59246 incoming connection
+[2019-06-21 16:40:13] [INFO] 127.0.0.1:59246 requested connection to lh3.googleusercontent.com:443
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59249 incoming connection
+[2019-06-21 16:40:13] [INFO] 127.0.0.1:59249 requested connection to www.gstatic.com:443
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59250 incoming connection
+[2019-06-21 16:40:13] [INFO] 127.0.0.1:59250 requested connection to encrypted-tbn0.gstatic.com:443
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59251 incoming connection
+[2019-06-21 16:40:13] [INFO] 127.0.0.1:59251 requested connection to apis.google.com:443
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59241 tunnel established
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59241 SSL session reused
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59243 tunnel established
+[2019-06-21 16:40:13] [ALL] 127.0.0.1:59243 SSL session reused
+[2019-06-21 16:40:14] [ALL] 127.0.0.1:59250 tunnel established
+[2019-06-21 16:40:14] [ALL] 127.0.0.1:59250 SSL session reused
+[2019-06-21 16:40:14] [ALL] 127.0.0.1:59251 tunnel established
+[2019-06-21 16:40:14] [ALL] 127.0.0.1:59251 SSL session reused
+[2019-06-21 16:40:14] [ALL] 127.0.0.1:59245 tunnel established
+[2019-06-21 16:40:14] [ALL] 127.0.0.1:59245 SSL session reused
+[2019-06-21 16:40:14] [ALL] 127.0.0.1:59246 tunnel established
+[2019-06-21 16:40:14] [ALL] 127.0.0.1:59246 SSL session reused
+[2019-06-21 16:40:14] [ALL] 127.0.0.1:59249 tunnel established
+[2019-06-21 16:40:14] [ALL] 127.0.0.1:59249 SSL session reused
+[2019-06-21 16:40:18] [ALL] 127.0.0.1:59276 incoming connection
+[2019-06-21 16:40:18] [INFO] 127.0.0.1:59276 requested connection to clients4.google.com:443
+[2019-06-21 16:40:18] [ALL] 127.0.0.1:59276 tunnel established
+[2019-06-21 16:40:18] [ALL] 127.0.0.1:59276 SSL session reused
+[2019-06-21 16:40:18] [ALL] 127.0.0.1:59278 incoming connection
+[2019-06-21 16:40:18] [INFO] 127.0.0.1:59278 requested connection to mtalk.google.com:443
+[2019-06-21 16:40:18] [ALL] 127.0.0.1:59278 tunnel established
+[2019-06-21 16:40:18] [ALL] 127.0.0.1:59278 SSL session reused
+[2019-06-21 16:40:23] [INFO] 127.0.0.1:59237 disconnected, 212 bytes received, 640 bytes sent, lasted for 10 seconds
+[2019-06-21 16:40:23] [INFO] 127.0.0.1:59239 disconnected, 2646 bytes received, 581 bytes sent, lasted for 10 seconds
+[2019-06-21 16:40:24] [INFO] 127.0.0.1:59241 disconnected, 2647 bytes received, 581 bytes sent, lasted for 11 seconds
+[2019-06-21 16:40:24] [ALL] 127.0.0.1:59309 incoming connection
+[2019-06-21 16:40:24] [INFO] 127.0.0.1:59309 requested connection to smp-device-content.apple.com:443
+[2019-06-21 16:40:24] [ALL] 127.0.0.1:59309 tunnel established
+[2019-06-21 16:40:24] [ALL] 127.0.0.1:59309 SSL session reused
+[2019-06-21 16:40:25] [ALL] 127.0.0.1:59315 incoming connection
+[2019-06-21 16:40:25] [INFO] 127.0.0.1:59315 requested connection to smp-device-content.apple.com:443
+[2019-06-21 16:40:25] [ALL] 127.0.0.1:59315 tunnel established
+[2019-06-21 16:40:25] [ALL] 127.0.0.1:59315 SSL session reused
+[2019-06-21 16:40:25] [ALL] 127.0.0.1:59317 incoming connection
+[2019-06-21 16:40:25] [ALL] 127.0.0.1:59318 incoming connection
+[2019-06-21 16:40:25] [ALL] 127.0.0.1:59319 incoming connection
+[2019-06-21 16:40:25] [ALL] 127.0.0.1:59320 incoming connection
+[2019-06-21 16:40:25] [INFO] 127.0.0.1:59320 disconnected, 0 bytes received, 0 bytes sent, lasted for 0 seconds
+[2019-06-21 16:40:25] [INFO] 127.0.0.1:59319 disconnected, 0 bytes received, 0 bytes sent, lasted for 0 seconds
+[2019-06-21 16:40:25] [INFO] 127.0.0.1:59318 disconnected, 0 bytes received, 0 bytes sent, lasted for 0 seconds
+[2019-06-21 16:40:25] [INFO] 127.0.0.1:59317 disconnected, 0 bytes received, 0 bytes sent, lasted for 0 seconds
+[2019-06-21 16:40:25] [INFO] 127.0.0.1:59315 disconnected, 7351 bytes received, 1434 bytes sent, lasted for 0 seconds
+[2019-06-21 16:40:25] [INFO] 127.0.0.1:59309 disconnected, 7683 bytes received, 1660 bytes sent, lasted for 1 seconds
+[2019-06-21 16:40:44] [INFO] 127.0.0.1:59224 disconnected, 3811 bytes received, 1450 bytes sent, lasted for 33 seconds
+[2019-06-21 16:40:44] [INFO] 127.0.0.1:59223 disconnected, 3811 bytes received, 1450 bytes sent, lasted for 33 seconds
