@@ -9,11 +9,11 @@ module.exports = async () => {
     const config = getConfig();
     const settings = getSettings();
 
-    const { port, proxyType } = settings;
+    const { port, proxyMode } = settings;
     const { local_port } = config;
 
     return await start({
-      proxyType,
+      proxyMode,
       pacPort: port.pac,
       globPort: local_port,
     });

@@ -5,6 +5,7 @@ __tests__
 example
 assets
 dist
+config
 
 # file
 *.lock

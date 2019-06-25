@@ -75,21 +75,16 @@ export default {
       const result = deepTake(newConfig, state);
       return { type, ...result };
     },
-    updateproxyMode: (state, mode) => {
-      return Object.assign({}, state, {
-        proxyMode: mode,
-      });
-    },
   },
   effect: {
     getStatus: async (_payload, actions) => {
       const result = await axios.get("/api/status");
       const config = result.data;
-      const { start, proxyType } = config;
+      const { start, proxyMode } = config;
 
       actions.config.updateState({
         started: start,
-        proxyMode: proxyType,
+        proxyMode,
       });
     },
     start: async (_payload, actions) => {

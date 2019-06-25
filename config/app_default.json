@@ -3,6 +3,6 @@
     "app": 8080,
     "pac": 1081
   },
-  "proxyType": "pac",
+  "proxyMode": "pac",
   "start": false
 }

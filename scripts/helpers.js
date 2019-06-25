@@ -20,24 +20,16 @@ const deepAssign = (origin, target) => {
 const success = (res, msg) => res.json({ type: "success", msg });
 const fail = (res, msg) => res.json({ type: "fail", msg });
 
-const setStatus = status => {
-  const config = JSON.parse(fs.readFileSync(SETTINGS).toString());
-  fs.writeFileSync(
-    SETTINGS,
-    JSON.stringify(Object.assign({}, config, { start: !!status }), null, 2),
-  );
-};
-
 const getSettings = () => JSON.parse(fs.readFileSync(SETTINGS).toString());
 const setSettings = settings => {
   const currentSettings = getSettings();
-  fs.writeFileSync(SETTINGS, Object.assign({}, currentSettings, settings));
+  fs.writeFileSync(SETTINGS, JSON.stringify(deepAssign(currentSettings, settings), null, 2));
 };
 
 const getConfig = () => JSON.parse(fs.readFileSync(CONFIG).toString());
 const setConfig = config => {
   const currentConfig = getConfig();
-  fs.writeFileSync(CONFIG, deepAssign(currentConfig, config));
+  fs.writeFileSync(CONFIG, JSON.stringify(deepAssign(currentConfig, config), null, 2));
 };
 
 module.exports = {
@@ -45,7 +37,6 @@ module.exports = {
   deepAssign,
   success,
   fail,
-  setStatus,
   getSettings,
   getConfig,
   setSettings,

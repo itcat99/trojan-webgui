@@ -30,11 +30,11 @@ const startTrojan = ({ logPath }) => {
   });
 };
 
-module.exports = async ({ proxyType, pacPort, globPort }) => {
+module.exports = async ({ proxyMode, pacPort, globPort }) => {
   const logPath = path.join(ASSETSDIR, "info.log");
 
   try {
-    proxyType === "pac" ? await usePacProxy(pacPort) : await useGlobProxy(globPort);
+    proxyMode === "pac" ? await usePacProxy(pacPort) : await useGlobProxy(globPort);
     await startTrojan(logPath);
   } catch (err) {
     throw new Error(err);

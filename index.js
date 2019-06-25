@@ -11,7 +11,7 @@ const settings = JSON.parse(fs.readFileSync(SETTINGS).toString());
 process.env.APP_CONFIG = JSON.stringify(settings);
 
 const { local_port } = config;
-const { port, proxyType } = settings;
+const { port, proxyMode } = settings;
 const { app, pac } = port;
 
 pacService(pac);
@@ -19,5 +19,5 @@ appService({
   appPort: app,
   pacPort: pac,
   globPort: local_port,
-  proxyType,
+  proxyMode,
 });

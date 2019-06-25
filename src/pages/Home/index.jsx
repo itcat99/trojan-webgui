@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import { CATEGOTE_SELECT, SERVER } from "constants";
 import { createContainer } from "@plume/flow";
+import QRCode from "qrcode";
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      qrcode: "",
+    };
+  }
   componentDidMount() {
     const { getConfig, getStatus } = this.props.actions;
 
@@ -120,16 +128,39 @@ class Home extends Component {
     exit && exit();
   };
 
-  getStatus = () => {
-    const { getStatus } = this.props.actions;
+  getQrcode = () => {
+    const { basic, ssl, tcp, mysql, type } = this.props.state;
+    const config = Object.assign({}, basic, {
+      type,
+      ssl,
+      tcp,
+    });
 
-    getStatus && getStatus();
+    if (type === "server") {
+      config.mysql = mysql;
+    }
+
+    console.log(config);
+    QRCode.toString(
+      JSON.stringify(config, null, 2),
+      {
+        type: "svg",
+      },
+      (err, svg) => {
+        if (err) throw new Error(err);
+
+        this.setState({
+          qrcode: svg,
+        });
+      },
+    );
   };
 
   render() {
+    const { qrcode } = this.state;
     const { state } = this.props;
     const { type, basic, ssl, tcp, mysql, proxyMode, started } = state;
-    console.log("state: ", state);
+
     return (
       <div>
         <form
@@ -164,7 +195,6 @@ class Home extends Component {
         >
           stop
         </button>
-        <button onClick={this.getStatus}>get status</button>
         <button
           style={proxyMode === "pac" ? { background: "rgb(100,200,100)", color: "#fff" } : null}
           onClick={this.usePac}
@@ -183,6 +213,13 @@ class Home extends Component {
           reset
         </button>
         <button onClick={this.exit}>Exit</button>
+        <button onClick={this.getQrcode}>get qrcode</button>
+        {qrcode ? (
+          <div
+            style={{ width: "200px", height: "200px" }}
+            dangerouslySetInnerHTML={{ __html: qrcode }}
+          ></div>
+        ) : null}
       </div>
     );
   }

@@ -9,7 +9,6 @@ const updatePacFile = require("../scripts/updatePacFile");
 
 /* ctl config */
 const updateConfig = require("../scripts/updateConfig");
-const updateSettings = require("../scripts/updateSettings");
 
 /* ctl */
 const start = require("../scripts/start");
@@ -17,10 +16,10 @@ const restart = require("../scripts/restart");
 const stop = require("../scripts/stop");
 const exit = require("../scripts/exit");
 
-const { success, fail, getSettings, getConfig } = require("../scripts/helpers");
+const { success, fail, getSettings, getConfig, setSettings } = require("../scripts/helpers");
 const { WEBDIR, CONFIGDIR, ASSETSDIR } = require("../scripts/constants");
 
-module.exports = ({ appPort, pacPort, globPort, proxyType }) => {
+module.exports = ({ appPort, pacPort, globPort, proxyMode }) => {
   const app = express();
   const router = express.Router();
   const upload = multer();
@@ -33,7 +32,7 @@ module.exports = ({ appPort, pacPort, globPort, proxyType }) => {
   const settings = getSettings();
 
   if (settings.start) {
-    start({ proxyType, pacPort, globPort }).then(
+    start({ proxyMode, pacPort, globPort }).then(
       () => console.log("Start"),
       err => console.error(err),
     );
@@ -56,8 +55,8 @@ module.exports = ({ appPort, pacPort, globPort, proxyType }) => {
 
   router.post("/start", async (req, res) => {
     try {
-      updateSettings({ start: true });
-      await start({ proxyType, pacPort, globPort });
+      setSettings({ start: true });
+      await start({ proxyMode, pacPort, globPort });
       success(res);
     } catch (err) {
       fail(res, err);
@@ -66,7 +65,7 @@ module.exports = ({ appPort, pacPort, globPort, proxyType }) => {
 
   router.post("/restart", async (req, res) => {
     try {
-      updateSettings({ start: true });
+      setSettings({ start: true });
       await restart();
       success(res);
     } catch (err) {
@@ -76,7 +75,7 @@ module.exports = ({ appPort, pacPort, globPort, proxyType }) => {
 
   router.post("/stop", async (req, res) => {
     try {
-      updateSettings({ start: false });
+      setSettings({ start: false });
       await stop();
       success(res);
     } catch (err) {
@@ -100,10 +99,10 @@ module.exports = ({ appPort, pacPort, globPort, proxyType }) => {
       fail(res, err);
     }
   });
-  router.post("/updateSettings", upload.array(), async (req, res) => {
+  router.post("/setSettings", upload.array(), async (req, res) => {
     try {
       const formData = req.body;
-      updateSettings(formData);
+      setSettings(formData);
       res.status(200);
     } catch (err) {
       fail(res, err);
@@ -120,7 +119,7 @@ module.exports = ({ appPort, pacPort, globPort, proxyType }) => {
   router.post("/pacon", (req, res) => {
     usePacProxy(pacPort)
       .then(() => {
-        updateSettings({ proxyType: "pac" });
+        setSettings({ proxyMode: "pac" });
         success(res);
       })
       .catch(err => fail(res, err));
@@ -128,7 +127,7 @@ module.exports = ({ appPort, pacPort, globPort, proxyType }) => {
   router.post("/globon", (req, res) => {
     useGlobProxy(globPort)
       .then(() => {
-        updateSettings({ proxyType: "glob" });
+        setSettings({ proxyMode: "glob" });
         success(res);
       })
       .catch(err => fail(res, err));
