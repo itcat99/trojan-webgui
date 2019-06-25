@@ -19,7 +19,9 @@ const exit = require("../scripts/exit");
 const { success, fail, getSettings, getConfig, setSettings } = require("../scripts/helpers");
 const { WEBDIR, CONFIGDIR, ASSETSDIR } = require("../scripts/constants");
 
-module.exports = ({ appPort, pacPort, globPort, proxyMode }) => {
+module.exports = config => {
+  const { port, proxyMode } = config;
+  const { app: appPort, glob: globPort, pac: pacPort } = port;
   const app = express();
   const router = express.Router();
   const upload = multer();

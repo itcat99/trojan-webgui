@@ -7,7 +7,7 @@ const usePacProxy = require("../scripts/usePacProxy");
 const useGlobProxy = require("../scripts/useGlobProxy");
 const { ASSETSDIR, CONFIG, TROJAN } = require("../scripts/constants");
 
-const startTrojan = ({ logPath }) => {
+const startTrojan = logPath => {
   let msg = "";
 
   return new Promise((resolve, reject) => {

@@ -1,23 +1,19 @@
-const fs = require("fs");
 const pacService = require("./services/pac");
 const appService = require("./services/app");
 
-const { CONFIG, SETTINGS } = require("./scripts/constants");
+const { getConfig, getSettings, deepAssign } = require("./scripts/helpers");
 
-const config = JSON.parse(fs.readFileSync(CONFIG).toString());
-const settings = JSON.parse(fs.readFileSync(SETTINGS).toString());
+const config = getConfig();
+const settings = getSettings();
 
 /* set APP_CONFIG in process.env */
 process.env.APP_CONFIG = JSON.stringify(settings);
 
-const { local_port } = config;
-const { port, proxyMode } = settings;
-const { app, pac } = port;
-
-pacService(pac);
-appService({
-  appPort: app,
-  pacPort: pac,
-  globPort: local_port,
-  proxyMode,
+const opts = deepAssign(settings, {
+  port: {
+    glob: config.local_port,
+  },
 });
+
+pacService(opts);
+appService(opts);

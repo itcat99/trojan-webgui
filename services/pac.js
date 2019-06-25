@@ -3,7 +3,8 @@ const path = require("path");
 const express = require("express");
 const { ASSETSDIR } = require("../scripts/constants");
 
-module.exports = port => {
+module.exports = config => {
+  const { glob: port } = config.port;
   const pac = express();
 
   pac.get("/proxy.pac", (req, res) => {
