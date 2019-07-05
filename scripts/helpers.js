@@ -2,6 +2,7 @@ const fs = require("fs");
 const { SETTINGS, CONFIG } = require("../scripts/constants");
 
 const isObject = obj => Object.prototype.toString.call(obj).indexOf("Object") >= 0;
+const isExist = file => fs.existsSync(file);
 
 const deepAssign = (origin, target) => {
   const tempObj = Object.assign({}, origin);
@@ -41,4 +42,5 @@ module.exports = {
   getConfig,
   setSettings,
   setConfig,
+  isExist,
 };

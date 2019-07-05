@@ -6,7 +6,7 @@ import Routers from "./Router";
 
 class App extends PureComponent {
   render() {
-    return Routers("false");
+    return Routers("true");
   }
 
   componentDidMount() {

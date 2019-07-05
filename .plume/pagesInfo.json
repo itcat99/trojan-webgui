@@ -1,18 +1,10 @@
 [
   {
-    "title": "Home",
-    "path": "/",
-    "component": "/Home/index.jsx",
-    "exact": true,
-    "author": false,
-    "layout": false
+    "path": "/Settings",
+    "component": "/Settings/index.jsx"
   },
   {
-    "title": "Settings",
-    "path": "/Settings",
-    "component": "/Settings/index.jsx",
-    "exact": true,
-    "author": false,
-    "layout": false
+    "path": "/",
+    "component": "/Home/index.jsx"
   }
 ]

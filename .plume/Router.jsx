@@ -1,92 +1,88 @@
 /* eslint-disable react/display-name */
-import React from "react";
+import React, { PureComponent } from "react";
 import { HashRouter, BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 
 import Loadable from "react-loadable";
 import pagesInfo from "./pagesInfo.json";
 
-const SwitchRoute = () => {
-  return (
-    <Switch>
-      {pagesInfo.map((route, index) => {
-        const { exact, path: url, component, author, layout } = route;
-        let loadableComponent;
+const delay = 200;
+const loading = props => {
+  const { error } = props;
+  if (error) {
+    throw new Error(error);
+  }
 
-        if (author || layout) {
-          const loader = {
-            Cmp: () => import(`../src/pages${component}`),
-          };
-          if (author) loader.Author = () => import(`../src/pages${author}`);
-          if (layout) loader.Layout = () => import(`../src/pages${layout}`);
-
-          loadableComponent = Loadable.Map({
-            loader,
-            render(loaded, props) {
-              const Author = loaded.Author ? loaded.Author.default : null;
-              const Layout = loaded.Layout ? loaded.Layout.default : null;
-              const Cmp = loaded.Cmp.default;
-              const { history, location, match, staticContext } = props;
-              const routeProps = { history, location, match, staticContext };
-
-              if (Author) {
-                const children = Layout ? (
-                  <Layout>
-                    <Cmp {...props} />
-                  </Layout>
-                ) : (
-                  <Cmp {...props} />
-                );
-
-                return <Author {...routeProps}>{children}</Author>;
-              }
-
-              return (
-                <Layout {...routeProps}>
-                  <Cmp {...props} />
-                </Layout>
-              );
-            },
-            loading: props => {
-              // if (url === "/") return null;
-              if (props.pastDelay) return <div>Loading...</div>;
-              return null;
-            },
-            delay: 200,
-          });
-        } else {
-          loadableComponent = Loadable({
-            loader: () => import(`../src/pages${component}`),
-            loading: props => {
-              // if (url === "/") return null;
-              if (props.pastDelay) return <div>Loading...</div>;
-              return null;
-            },
-            delay: 200,
-          });
-        }
-
-        return (
-          <Route
-            exact={exact}
-            path={url}
-            key={`${url}_${index}`}
-            component={withRouter(loadableComponent)}
-          />
-        );
-      })}
-      <Route
-        component={Loadable({
-          loader: () => import(`./404`),
-          loading: () => <div>Loading...</div>,
-          delay: 300,
-        })}
-      />
-    </Switch>
-  );
+  if (props.pastDelay) return <div>Loading...</div>;
+  return null;
 };
 
-const Router = hashRouter => {
-  return hashRouter === "true" ? (
+const getLoadableCmp = info => {
+  const { path: url, component, author, layout, children } = info;
+  let loadableComponent;
+
+  const loader = {};
+  if (component) loader.Cmp = () => import(`../src/pages${component}`);
+  if (author) loader.Author = () => import(`../src/pages${author}`);
+  if (layout) loader.Layout = () => import(`../src/pages${layout}`);
+
+  loadableComponent = Loadable.Map({
+    loader,
+    render(loaded, props) {
+      const Author = loaded.Author ? loaded.Author.default : null;
+      const Layout = loaded.Layout ? loaded.Layout.default : null;
+      const Cmp = loaded.Cmp ? loaded.Cmp.default : null;
+      const { history, location, match, staticContext } = props;
+      const routeProps = { history, location, match, staticContext };
+      let resultCmp = null;
+
+      if (Cmp) resultCmp = <Cmp {...props} />;
+      if (children)
+        resultCmp = (
+          <Switch>
+            {getRoutes(children)}
+            {getRoutes([{ path: url === "/" ? url : `${url}/`, component }])}
+          </Switch>
+        );
+      if (Layout) resultCmp = <Layout {...props}>{resultCmp}</Layout>;
+      if (Author) resultCmp = <Author {...routeProps}>{resultCmp}</Author>;
+
+      return resultCmp;
+    },
+    loading,
+    delay,
+  });
+
+  return loadableComponent;
+};
+
+const getRoutes = info => {
+  return info.map((route, index) => {
+    const { path: url } = route;
+    const loadableComponent = getLoadableCmp(route);
+
+    return <Route path={url} key={`${url}_${index}`} component={withRouter(loadableComponent)} />;
+  });
+};
+
+class SwitchRoute extends PureComponent {
+  render() {
+    return (
+      <Switch>
+        {getRoutes(pagesInfo)}
+        <Route
+          component={Loadable({
+            loader: () => import(`./404`),
+            loading: () => <div>Loading...</div>,
+            delay: 300,
+          })}
+        />
+      </Switch>
+    );
+  }
+}
+
+const Router = hashRouter =>
+  hashRouter === "true" ? (
     <HashRouter>
       <SwitchRoute />
     </HashRouter>
@@ -95,6 +91,5 @@ const Router = hashRouter => {
       <SwitchRoute />
     </BrowserRouter>
   );
-};
 
 export default Router;

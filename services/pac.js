@@ -4,7 +4,7 @@ const express = require("express");
 const { ASSETSDIR } = require("../scripts/constants");
 
 module.exports = config => {
-  const { glob: port } = config.port;
+  const { pac: port } = config.port;
   const pac = express();
 
   pac.get("/proxy.pac", (req, res) => {

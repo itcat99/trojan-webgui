@@ -1,11 +1,14 @@
 const path = require("path");
 const express = require("express");
 const multer = require("multer");
+const bodyParser = require("body-parser");
 
 /* ctl pac */
 const usePacProxy = require("../scripts/usePacProxy");
 const useGlobProxy = require("../scripts/useGlobProxy");
 const updatePacFile = require("../scripts/updatePacFile");
+const getCustomRules = require("../scripts/getRules");
+const updateRules = require("../scripts/updateRules");
 
 /* ctl config */
 const updateConfig = require("../scripts/updateConfig");
@@ -25,6 +28,7 @@ module.exports = config => {
   const app = express();
   const router = express.Router();
   const upload = multer();
+  const jsonBody = bodyParser.json();
 
   app.use(express.static(WEBDIR));
   app.use(express.static(ASSETSDIR));
@@ -42,7 +46,6 @@ module.exports = config => {
 
   router.get("/status", (_req, res) => {
     const config = getSettings();
-    console.log("config: ", config);
     res.json(config);
   });
 
@@ -118,6 +121,23 @@ module.exports = config => {
       fail(res, error);
     }
   });
+  router.get("/customRules", (req, res) => {
+    const rules = getCustomRules();
+    if (rules) {
+      success(res, rules.toString());
+    } else {
+      fail(res, "no custom rules");
+    }
+  });
+  router.post("/updateRules", jsonBody, (req, res) => {
+    try {
+      updateRules(req.body.rules);
+      success(res, "update rules successed.");
+    } catch (error) {
+      fail(res, "update rules failed.");
+    }
+  });
+
   router.post("/pacon", (req, res) => {
     usePacProxy(pacPort)
       .then(() => {

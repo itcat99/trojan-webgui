@@ -140,7 +140,6 @@ class Home extends Component {
       config.mysql = mysql;
     }
 
-    console.log(config);
     QRCode.toString(
       JSON.stringify(config, null, 2),
       {

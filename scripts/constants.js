@@ -10,6 +10,7 @@ const SETTINGS = path.join(CONFIGDIR, "app.json");
 const SETTINGS_DEFAULT = path.join(CONFIGDIR, "app_default.json");
 
 const TROJAN = path.resolve(__dirname, "..", "trojan-osx");
+const CUSTOM_RULES = path.join(ASSETSDIR, "custom-rules.txt");
 
 module.exports = {
   CONFIGDIR,
@@ -20,4 +21,5 @@ module.exports = {
   SETTINGS,
   SETTINGS_DEFAULT,
   TROJAN,
+  CUSTOM_RULES,
 };

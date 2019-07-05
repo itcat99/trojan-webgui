@@ -6,6 +6,7 @@ example
 assets
 dist
 config
+genpac
 
 # file
 *.lock

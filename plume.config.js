@@ -8,6 +8,7 @@ module.exports = {
     cssModules: false,
     styledComponents: true,
     flow: true,
+    hashRouter: true,
     webpack: (webpack_config, plume_config) => {
       const { components, src } = plume_config.paths;
       // webpack_config.devServer = {
