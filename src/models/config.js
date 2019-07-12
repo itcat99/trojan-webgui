@@ -104,7 +104,9 @@ export default {
     usePac: async (_payload, actions) => {
       try {
         await axios.post("/api/pacon");
-        actions.config.updateproxyMode("pac");
+        actions.config.updateState({
+          proxyMode: "pac",
+        });
       } catch (error) {
         throw new Error(error);
       }
@@ -112,7 +114,9 @@ export default {
     useGlob: async (_payload, actions) => {
       try {
         await axios.post("/api/globon");
-        actions.config.updateproxyMode("global");
+        actions.config.updateState({
+          proxyMode: "global",
+        });
       } catch (error) {
         throw new Error(error);
       }
